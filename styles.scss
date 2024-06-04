@@ -1,0 +1,202 @@
+// =======================================================================
+// GLOBAL VARIABLES
+// =======================================================================
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+$g-font: "Montserrat", sans-serif;
+
+$g-wdth-s: 320px;
+$g-wdth-m: 568px;
+
+$g-cr-blue-10: #0d0d0d;
+$g-cr-blue-20: #005cff;
+$g-cr-blue-30: #8ebbff;
+$g-cr-blue-40: #dae6ec;
+$g-cr-blue-50: #eaf0f6;
+$g-cr-blue-60: #ffffff;
+
+$g-prog-wdth-s: 110px;
+$g-prog-wdth-m: 150px;
+$g-prog-wdth-l: 200px;
+
+$g-prog-size-s: 10px;
+$g-prog-size-m: 13px;
+$g-prog-size-l: 15px;
+
+body {
+    font-family: $g-font;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+@mixin height-width() {
+    width: 100%;
+    height: 100%;
+}
+
+// =======================================================================
+// MAIN CONTAINER
+// =======================================================================
+.wrapper {
+    height: 100vh;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.container {
+    @include height-width;
+    display: flex;
+    flex-direction: column;
+
+    > section {
+        display: flex;
+        flex: 1;
+        align-items: center;
+    }
+
+    @media screen and (width >= $g-wdth-m) {
+        flex-direction: row;
+    }
+}
+
+.heading {
+    margin-bottom: 10px;
+}
+
+// Progress
+// =======================================================================
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.progress {
+    position: relative;
+    width: $g-prog-wdth-s;
+    height: $g-prog-wdth-s;
+    margin: auto;
+
+    @media screen and (width > $g-wdth-m) {
+        width: $g-prog-wdth-l;
+        height: $g-prog-wdth-l;
+    }
+
+    > .progress__emt {
+        fill: transparent;
+        stroke: $g-cr-blue-50;
+        stroke-width: 10px;
+    }
+
+    > .progress__fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        fill: transparent;
+        stroke: $g-cr-blue-20;
+        stroke-width: 10px;
+
+        > circle {
+            transition: 0.35s stroke-dashoffset;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    }
+}
+
+.progress__fill.animate {
+    animation: rotate 3s linear infinite;
+}
+
+// Controls
+// =======================================================================
+.controls {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+    label {
+        margin: 10px;
+    }
+}
+
+.controls__value {
+    > span {
+        width: 45px;
+        height: 30px;
+        overflow: hidden;
+        border-radius: 15px;
+        border: $g-cr-blue-10 solid 1px;
+    }
+}
+
+.controls input[type="number"] {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: none;
+    text-align: center;
+    font-family: $g-font;
+    font-size: 16px;
+    text-align: center;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+.controls label {
+    margin: 5px 0;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.controls__hide,
+.controls__animate {
+    > input {
+        display: none;
+    }
+
+    &:has(input:checked) > span {
+        background: $g-cr-blue-20;
+    }
+
+    &:has(input:checked) > span::before {
+        transform: translateX(15px);
+    }
+
+    > span {
+        position: relative;
+        display: inline-block;
+        width: 45px;
+        height: 30px;
+        background: $g-cr-blue-40;
+        border-radius: 15px;
+        transition: all 0.3s linear;
+
+        &::before {
+            position: absolute;
+            content: "";
+            margin: 2px;
+            top: 0;
+            left: 0;
+            height: calc(100% - 4px);
+            width: 26px;
+            border-radius: 15px;
+            background: $g-cr-blue-60;
+            transition: all 0.3s linear;
+        }
+    }
+}
