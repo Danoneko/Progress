@@ -97,7 +97,7 @@ body {
         stroke-width: 10px;
     }
 
-    > .progress__fill {
+    > .progress__percent {
         position: absolute;
         top: 0;
         left: 0;
@@ -113,7 +113,7 @@ body {
     }
 }
 
-.progress__fill.animate {
+.progress__percent.animate {
     animation: rotate 3s linear infinite;
 }
 

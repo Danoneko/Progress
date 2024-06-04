@@ -1,41 +1,19 @@
-const progressContainer = document.querySelector(".progress-container");
-const progressFill = document.querySelector(".progress__fill");
-const progressLine = progressFill.querySelector("circle");
-const radius = progressLine.getAttribute("r");
-const circleLenght = 2 * Math.PI * radius;
-
-progressLine.style.strokeDasharray = `${circleLenght} ${circleLenght}`;
-progressLine.style.strokeDashoffset = circleLenght;
+import Progress from "./progress.js";
 
 const valueInput = document.getElementById("value");
 const animate = document.getElementById("animate");
 const hide = document.getElementById("hide");
-
-function setProgress(percent) {
-    const offset = circleLenght - (percent / 100) * circleLenght;
-    progressLine.style.strokeDashoffset = offset;
-}
+const progress = new Progress();
+progress.setValue(valueInput.value);
 
 valueInput.addEventListener("input", function () {
-    setProgress(valueInput.value);
+    progress.setValue(valueInput.value);
 });
 
 animate.addEventListener("change", function () {
-    if (animate.checked) {
-        progressFill.classList.add("animate");
-    } else {
-        progressFill.classList.remove("animate");
-    }
+    progress.setAnimated(animate.checked);
 });
 
 hide.addEventListener("change", function () {
-    const progress = document.querySelector(".progress");
-    if (hide.checked) {
-        progress.style.display = "none";
-    } else {
-        progress.style.display = "block";
-    }
+    progress.setHide(hide.checked);
 });
-
-// Initialize the progress bar with the initial value
-setProgress(valueInput.value);
